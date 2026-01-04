@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Exception\Handler\InvalidAPIKeyExceptionHandler;
 use App\Exception\Handler\InvalidCredentialsExceptionHandler;
 use App\Exception\Handler\UnauthenticatedExceptionHandler;
 
@@ -21,7 +20,6 @@ return [
             App\Exception\Handler\AppExceptionHandler::class,
             UnauthenticatedExceptionHandler::class,
             InvalidCredentialsExceptionHandler::class,
-            InvalidAPIKeyExceptionHandler::class,
         ],
     ],
 ];

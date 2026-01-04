@@ -1,5 +1,6 @@
 <?php
 
+use App\FailureHandler\APIKeyFailureHandler;
 use GaaraHyperf\Authenticator\OpaqueTokenResponseHandler;
 
 return [
@@ -105,9 +106,36 @@ return [
             'authenticators' => [
                 'api_key' => [
                     'api_key_param' => 'X-API-KEY',
+                    'failure_handler' => APIKeyFailureHandler::class,
                 ],
             ],
-        ]
+        ],
+
+        // 'hmac-signature-example' => [
+        //     'matcher' => [
+        //         'pattern' => '^/hmac-signature-auth/',
+        //     ],
+
+        //     'user_provider' => [
+        //         'type' => 'memory', // 为了演示方便，使用memory; 实际需要自定义一个实现了UserInterface的用户模型类, 不需要密码
+        //         'users' => [
+        //             'hmac-user-12345' => [ // 实际应该是一串随机生成的字符串
+        //                 'password' => ''
+        //             ],
+        //         ],
+        //     ],
+
+        //     'authenticators' => [
+        //         'hmac_signature' => [
+        //             'access_key_param' => 'X-ACCESS-KEY',
+        //             'signature_param' => 'X-SIGNATURE',
+        //             'signature_method' => 'HMAC-SHA256',
+        //             // 'timestamp_param' => 'X-TIMESTAMP',
+        //             // 'nonce_param' => 'X-NONCE',
+        //             // 'allowed_time_skew' => 300,
+        //         ],
+        //     ],
+        // ],
     ],
 
     'services' => [
