@@ -106,7 +106,6 @@ return [
             'authenticators' => [
                 'api_key' => [
                     'api_key_param' => 'X-API-KEY',
-                    'failure_handler' => APIKeyFailureHandler::class,
                 ],
             ],
         ],
