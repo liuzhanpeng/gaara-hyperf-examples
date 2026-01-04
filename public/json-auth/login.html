@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Json Auth Login</title>
+</head>
+<body>
+    <h1>Json Auth Login</h1>
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+    </div>
+    <div>
+        <button onclick="login()">Login</button>
+    </div>
+
+    <script src="auth-utils.js"></script>
+    <script>
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await ApiClient.post('/json-auth/check_login', {
+                    username: username,
+                    password: password
+                });
+
+                if (response.status !== 200) {
+                    alert('Login failed: ' + response.statusText);
+                    return;
+                }
+
+                const data = await response.json();
+                if (data.code === 0 && data.data && data.data.access_token) {
+                    TokenManager.saveToken(data.data.access_token);
+                    alert('Login successful!');
+                    window.location.href = '/json-auth/index.html';
+                } else {
+                    alert('Login failed: ' + (data.msg || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login request failed.');
+            }
+        }
+    </script> 
+</body>
+</html>

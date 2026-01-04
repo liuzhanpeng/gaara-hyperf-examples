@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Json Auth</title>
+</head>
+
+<body>
+    <h1>Json Auth Example</h1>
+    <div>
+        username: <span id="username"></span>
+    </div>
+    <div>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script src="auth-utils.js"></script>
+    <script>
+        const response =  ApiClient.get('/json-auth/userinfo');
+        response.then(response => {
+            if (response.status !== 200) {
+                console.error('Failed to fetch user data:', response);
+                document.getElementById('username').textContent = 'Error fetching user data';
+                return;
+            }
+    
+            response.json().then(json => {
+                if (!json || !json.username) {
+                    throw new Error('Invalid user data');
+                }
+                document.getElementById('username').textContent = json.username || '-';
+            }).catch(error => {
+                console.error('Error parsing user data:', error);
+                document.getElementById('username').textContent = 'Error fetching user data';
+            });
+        }).catch(error => {
+            console.error('Error fetching user data:', error);
+            document.getElementById('username').textContent = 'Error fetching user data';
+        });
+
+        async function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                try {
+                    const response = await ApiClient.post('/json-auth/logout');
+                    const data = await response.json();
+                    
+                    alert(data.message || 'Logged out successfully');
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    alert('Logout request failed, but you will be redirected to login page.');
+                } finally {
+                    TokenManager.redirectToLogin();
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,6 +1,10 @@
 <?php
 
 declare(strict_types=1);
+
+use App\Exception\Handler\InvalidCredentialsExceptionHandler;
+use App\Exception\Handler\UnauthenticatedExceptionHandler;
+
 /**
  * This file is part of Hyperf.
  *
@@ -14,6 +18,8 @@ return [
         'http' => [
             Hyperf\HttpServer\Exception\Handler\HttpExceptionHandler::class,
             App\Exception\Handler\AppExceptionHandler::class,
+            UnauthenticatedExceptionHandler::class,
+            InvalidCredentialsExceptionHandler::class,
         ],
     ],
 ];
