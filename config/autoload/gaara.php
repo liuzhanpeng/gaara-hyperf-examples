@@ -87,6 +87,27 @@ return [
                 ],
             ],
         ],
+
+        'api-key-example' => [
+            'matcher' => [
+                'pattern' => '^/api-key-auth/',
+            ],
+
+            'user_provider' => [
+                'type' => 'memory', // 为了演示方便，使用memory; 实际需要自定义一个实现了UserInterface的用户模型类, 不需要密码
+                'users' => [
+                    'api-key-UYv78sOva1tUalvp1M2' => [ // 实际应该是一串随机生成的字符串
+                        'password' => ''
+                    ],
+                ],
+            ],
+
+            'authenticators' => [
+                'api_key' => [
+                    'api_key_param' => 'X-API-KEY',
+                ],
+            ],
+        ]
     ],
 
     'services' => [
