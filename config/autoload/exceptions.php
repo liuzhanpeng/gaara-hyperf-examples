@@ -19,7 +19,7 @@ return [
             Hyperf\HttpServer\Exception\Handler\HttpExceptionHandler::class,
             App\Exception\Handler\AppExceptionHandler::class,
             UnauthenticatedExceptionHandler::class,
-            InvalidCredentialsExceptionHandler::class,
+            // InvalidCredentialsExceptionHandler::class,
         ],
     ],
 ];
