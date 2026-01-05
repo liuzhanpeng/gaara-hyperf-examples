@@ -89,52 +89,65 @@ return [
             ],
         ],
 
-        'api-key-example' => [
-            'matcher' => [
-                'pattern' => '^/api-key-auth/',
-            ],
-
-            'user_provider' => [
-                'type' => 'memory', // 为了演示方便，使用memory; 实际需要自定义一个实现了UserInterface的用户模型类, 不需要密码
-                'users' => [
-                    'api-key-UYv78sOva1tUalvp1M2' => [ // 实际应该是一串随机生成的字符串
-                        'password' => ''
-                    ],
-                ],
-            ],
-
-            'authenticators' => [
-                'api_key' => [
-                    'api_key_param' => 'X-API-KEY',
-                ],
-            ],
-        ],
-
-        // 'hmac-signature-example' => [
+        // 'api-key-example' => [
         //     'matcher' => [
-        //         'pattern' => '^/hmac-signature-auth/',
+        //         'pattern' => '^/api-key-auth/',
         //     ],
 
         //     'user_provider' => [
         //         'type' => 'memory', // 为了演示方便，使用memory; 实际需要自定义一个实现了UserInterface的用户模型类, 不需要密码
         //         'users' => [
-        //             'hmac-user-12345' => [ // 实际应该是一串随机生成的字符串
+        //             'api-key-UYv78sOva1tUalvp1M2' => [ // 实际应该是一串随机生成的字符串
         //                 'password' => ''
         //             ],
         //         ],
         //     ],
 
         //     'authenticators' => [
-        //         'hmac_signature' => [
-        //             'access_key_param' => 'X-ACCESS-KEY',
-        //             'signature_param' => 'X-SIGNATURE',
-        //             'signature_method' => 'HMAC-SHA256',
-        //             // 'timestamp_param' => 'X-TIMESTAMP',
-        //             // 'nonce_param' => 'X-NONCE',
-        //             // 'allowed_time_skew' => 300,
+        //         'api_key' => [
+        //             'api_key_param' => 'X-API-KEY',
         //         ],
         //     ],
         // ],
+
+        'hmac-signature-example' => [
+            'matcher' => [
+                'pattern' => '^/hmac-signature-auth/',
+                'exclusions' => [
+                    '/hmac-signature-auth/generateSignature'
+                ],
+            ],
+
+            'user_provider' => [
+                'type' => 'memory', // 为了演示方便，使用memory
+                'users' => [
+                    'hmac-user-1' => [
+                        'password' => 'KLvoaD3f9qZ3TY8w', // 密钥
+                    ],
+                ],
+            ],
+
+            'authenticators' => [
+                'hmac_signature' => [
+                    'api_key_param' => 'X-API-KEY', // 请求头中的api key参数名; 默认X-API-KEY; 
+                    //     'signature_param' => 'X-SIGNATURE', // 请求头中的签名参数名
+                    //     'timestamp_param' => 'X-TIMESTAMP', // 请求头中的时间戳参数名
+                    //     'nonce_enabled' => true, // 是否启用随机字符串; 防止重放攻击
+                    //     'nonce_param' => 'X-NONCE', // nonce_enabled==true必须; 请求头中的随机字符串参数名 
+                    //     'nonce_cache_prefix' => 'default', // nonce_enabled==true必须; 缓存前缀
+                    //     'ttl' => 60, // 请求签名的有效期，单位秒
+                    //     'algo' => 'sha256', // 签名算法
+                    //     'secret_encrypto_enabled' => false, // 是否启用密钥加密
+                    //     'secret_encryptor' => [ // secret_encrypto_enabled==true必须; 加密器配置
+                    //         'type' => 'default', // 支持default, custom
+                    //         'args' => [
+                    //             'algo' => 'AES-256-CBC', // type==default必须; 加密算法
+                    //             'key' => 'secret-key', // type==default必须; 加密密钥
+                    //         ]
+                    //     ]
+                ],
+            ],
+        ],
     ],
 
     'services' => [
