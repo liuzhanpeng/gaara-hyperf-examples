@@ -9,8 +9,8 @@ use Hyperf\HttpServer\Annotation\GetMapping;
 
 use function GaaraHyperf\auth;
 
-#[Controller(prefix: "/hmac-signature-auth")]
-class HmacSignatureAuthController extends AbstractController
+#[Controller(prefix: "/hmac-auth")]
+class HmacAuthController extends AbstractController
 {
     #[GetMapping(path: "userinfo")]
     public function userinfo()
@@ -26,7 +26,7 @@ class HmacSignatureAuthController extends AbstractController
     {
         // 结构: METHOD \n PATH \n QUERY \n APIKEY \n TIMESTAMP [\n NONCE] \n BODY_HASH
         $method = 'GET';
-        $path = '/hmac-signature-auth/userinfo';
+        $path = '/hmac-auth/userinfo';
         $query = '';
         $apiKey = 'hmac-user-1';
         $timestamp = time();

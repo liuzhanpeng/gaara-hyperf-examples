@@ -1,7 +1,10 @@
 <?php
 
 use App\FailureHandler\APIKeyFailureHandler;
+use App\IPResolver;
 use GaaraHyperf\Authenticator\OpaqueTokenResponseHandler;
+use GaaraHyperf\EventListener\LoginAttemptLimitListener;
+use GaaraHyperf\EventListener\LoginRateLimitListener;
 
 return [
     'guards' => [
@@ -75,7 +78,7 @@ return [
                     // 'password_param' => 'password', // 密码字段名
                     'success_handler' => [ // 可选，登录成功处理器配置; 无状态认证时一般都需要配置, 用于生成access token返回给客户端
                         'class' => OpaqueTokenResponseHandler::class,
-                        'args' => [
+                        'params' => [
                             'token_manager' => 'default',
                             'response_template' => '{ "code": 0, "msg": "success", "data": { "access_token": "#ACCESS_TOKEN#"} }',
                         ],
@@ -91,6 +94,18 @@ return [
                     // ],
                 ],
             ],
+            'listeners' => [
+                [
+                    'class' => LoginAttemptLimitListener::class,
+                    'params' => [
+                        'type' => 'sliding_window', // 限流器类型，支持 token_bucket, sliding_window, fixed_window
+                        'options' => [
+                            'limit' => 2,
+                            'interval' => 60,
+                        ]
+                    ]
+                ],
+            ]
         ],
 
         'api-key-example' => [
@@ -114,11 +129,11 @@ return [
             ],
         ],
 
-        'hmac-signature-example' => [
+        'hmac-example' => [
             'matcher' => [
-                'pattern' => '^/hmac-signature-auth/',
+                'pattern' => '^/hmac-auth/',
                 'exclusions' => [
-                    '/hmac-signature-auth/generateSignature'
+                    '/hmac-auth/generateSignature'
                 ],
             ],
 
@@ -132,7 +147,7 @@ return [
             ],
 
             'authenticators' => [
-                'hmac_signature' => [
+                'hmac' => [
                     'api_key_param' => 'X-API-KEY', // 请求头中的api key参数名; 默认X-API-KEY; 
                     //     'signature_param' => 'X-SIGNATURE', // 请求头中的签名参数名
                     //     'timestamp_param' => 'X-TIMESTAMP', // 请求头中的时间戳参数名
@@ -144,7 +159,7 @@ return [
                     //     'secret_encrypto_enabled' => false, // 是否启用密钥加密
                     //     'secret_encryptor' => [ // secret_encrypto_enabled==true必须; 加密器配置
                     //         'type' => 'default', // 支持default, custom
-                    //         'args' => [
+                    //         'params' => [
                     //             'algo' => 'AES-256-CBC', // type==default必须; 加密算法
                     //             'key' => 'secret-key', // type==default必须; 加密密钥
                     //         ]
