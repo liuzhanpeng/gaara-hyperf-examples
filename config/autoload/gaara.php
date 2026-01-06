@@ -84,31 +84,35 @@ return [
                 ],
                 'opaque_token' => [ // 不透明令牌认证器，用于API无状态认证； 一般配合 JSON登录认证器 使用
                     // 'token_manager' => 'default', // 可选；不透明令牌管理器服务名称; 默认default
-                    // 'token_extractor' => 'default' // 可选; 访问令牌提取器服务名称; 默认default
+                    // 'token_extractor' => [
+                    //     'type' => 'header', // 支持 header, cookie, custom; 默认header
+                    //     'param_name' => 'Authorization', // type == header时可选，默认Authorization; type == cookie时可选，默认access_token
+                    //     'param_type' => 'Bearer', // type == header时可选，默认Bearer
+                    // ],
                 ],
             ],
         ],
 
-        // 'api-key-example' => [
-        //     'matcher' => [
-        //         'pattern' => '^/api-key-auth/',
-        //     ],
+        'api-key-example' => [
+            'matcher' => [
+                'pattern' => '^/api-key-auth/',
+            ],
 
-        //     'user_provider' => [
-        //         'type' => 'memory', // 为了演示方便，使用memory; 实际需要自定义一个实现了UserInterface的用户模型类, 不需要密码
-        //         'users' => [
-        //             'api-key-UYv78sOva1tUalvp1M2' => [ // 实际应该是一串随机生成的字符串
-        //                 'password' => ''
-        //             ],
-        //         ],
-        //     ],
+            'user_provider' => [
+                'type' => 'memory', // 为了演示方便，使用memory; 实际需要自定义一个实现了UserInterface的用户模型类, 不需要密码
+                'users' => [
+                    'api-key-UYv78sOva1tUalvp1M2' => [ // 实际应该是一串随机生成的字符串
+                        'password' => ''
+                    ],
+                ],
+            ],
 
-        //     'authenticators' => [
-        //         'api_key' => [
-        //             'api_key_param' => 'X-API-KEY',
-        //         ],
-        //     ],
-        // ],
+            'authenticators' => [
+                'api_key' => [
+                    'api_key_param' => 'X-API-KEY',
+                ],
+            ],
+        ],
 
         'hmac-signature-example' => [
             'matcher' => [
@@ -175,13 +179,6 @@ return [
         //         'user_agent_bind_enabled' => false, // 是否启用User-Agent绑定; 默认false
         //         'single_session' => true, // 是否启用单会话登录; 默认true
         //         'access_token_length' => 16, // 生成令牌长度; 默认16
-        //     ]
-        // ],
-        // 'access_token_extractors' => [ // 访问令牌提取器配置; 内置了一个名称为default的提取器(type==header)
-        //     'default' => [ // 不透明令牌提取器名称; 可按实际情况为每个Guard配置不同的提取器 
-        //         'type' => 'header', // 支持 header, cookie, custom; 默认header
-        //         'param_name' => 'Authorization', // type == header时可选，默认Authorization; type == cookie时可选，默认access_token
-        //         'param_type' => 'Bearer', // type == header时可选，默认Bearer
         //     ]
         // ],
     ],
