@@ -229,8 +229,8 @@ return [
         // ],
         'jwt_access_token_managers' => [
             'default' => [
-                'secret_key' => 'SU9idWFtKGRzZnZhZGtsbFlranYxM0t2ZzY3OHYxU3Yx', // 请修改为自己的密钥(需进行Base64编码)
                 'algo' => 'HS256', // 签名算法
+                'secret_key' => 'SU9idWFtKGRzZnZhZGtsbFlranYxM0t2ZzY3OHYxU3Yx', // 请修改为自己的密钥(需进行Base64编码)
                 'expires_in' => 60, // token过期时间，单位秒
             ],
         ]
