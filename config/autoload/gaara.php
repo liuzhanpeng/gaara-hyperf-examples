@@ -5,6 +5,7 @@ use App\IPResolver;
 use GaaraHyperf\Authenticator\OpaqueTokenResponseHandler;
 use GaaraHyperf\EventListener\LoginAttemptLimitListener;
 use GaaraHyperf\EventListener\LoginRateLimitListener;
+use GaaraHyperf\JWT\JWTResponseHandler;
 
 return [
     'guards' => [
@@ -98,7 +99,7 @@ return [
                 [
                     'class' => LoginAttemptLimitListener::class,
                     'params' => [
-                        'type' => 'sliding_window', // 限流器类型，支持 token_bucket, sliding_window, fixed_window
+                        'type' => 'sliding_window', // 限流器类型，支持sliding_window, fixed_window, token_bucket(不推荐); 默认sliding_window
                         'options' => [
                             'limit' => 2,
                             'interval' => 60,
@@ -167,6 +168,36 @@ return [
                 ],
             ],
         ],
+
+        'jwt-example' => [
+            'matcher' => [
+                'pattern' => '^/jwt-auth/'
+            ],
+
+            'user_provider' => [
+                'type' => 'memory',
+                'users' => [
+                    'user1' => [
+                        'password' => '$2y$10$Eaf.zDYlBYKk9sxwrpxox.L6YKz2Ef3ssikoNtgn2zwQcjoirW22y',
+                    ],
+                ],
+            ],
+
+            'authenticators' => [
+                'json_login' => [
+                    'check_path' => '/jwt-auth/check_login', // JSON登录请求路径
+                    'success_handler' => [
+                        'class' => JWTResponseHandler::class,
+                        'params' => [
+                            'token_manager' => 'default',
+                        ],
+                    ],
+                ],
+                'jwt' => [
+                    'token_manager' => 'default',
+                ],
+            ],
+        ]
     ],
 
     'services' => [
@@ -196,5 +227,12 @@ return [
         //         'access_token_length' => 16, // 生成令牌长度; 默认16
         //     ]
         // ],
+        'jwt_access_token_managers' => [
+            'default' => [
+                'secret_key' => 'SU9idWFtKGRzZnZhZGtsbFlranYxM0t2ZzY3OHYxU3Yx', // 请修改为自己的密钥(需进行Base64编码)
+                'algo' => 'HS256', // 签名算法
+                'expires_in' => 60, // token过期时间，单位秒
+            ],
+        ]
     ],
 ];

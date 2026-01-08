@@ -29,7 +29,8 @@
         "hyperf/session": "^3.1",
         "hyperf/view": "^3.1",
         "hyperf/view-engine": "^3.1",
-        "lzpeng/gaara-hyperf": "dev-develop"
+        "lzpeng/gaara-hyperf": "dev-master",
+        "lzpeng/gaara-hyperf-jwt": "dev-develop"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -83,6 +84,10 @@
         {
             "type": "path",
             "url": "/Users/peng/Works/gaara-hyperf"
+        },
+        {
+            "type": "path",
+            "url": "/Users/peng/Works/gaara-hyperf-jwt"
         }
     ]
 }

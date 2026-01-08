@@ -42,8 +42,8 @@ class HmacAuthController extends AbstractController
             $bodyHash,
         ]);
 
-        echo 'generate:';
-        print_r($dataToSign);
+        // echo 'generate:';
+        // print_r($dataToSign);
 
         $secret = 'KLvoaD3f9qZ3TY8w'; // 与用户关联的密钥
         $signature = hash_hmac('sha256', $dataToSign, $secret);
