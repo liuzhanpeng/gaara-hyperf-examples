@@ -189,12 +189,14 @@ return [
                     'success_handler' => [
                         'class' => JWTResponseHandler::class,
                         'params' => [
-                            'token_manager' => 'default',
+                            'access_token_manager' => 'default',
+                            'refresh_token_manager' => 'default',
                         ],
                     ],
                 ],
                 'jwt' => [
                     'token_manager' => 'default',
+                    'refresh_path' => '/jwt-auth/refresh-token', // 必须; 刷新token请求路径
                 ],
             ],
         ]
