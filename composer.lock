@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "80f5dc33a5a86ecdf688704d9000773c",
+    "content-hash": "9bdf517bd68febe11df947f320450b4f",
     "packages": [
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -3708,7 +3708,7 @@
             "dist": {
                 "type": "path",
                 "url": "/Users/peng/Works/gaara-hyperf",
-                "reference": "ab2323a945395a53a15fd6e6ba914aa050156cc8"
+                "reference": "71a321d311d67d7c06466878a9d56dfc5c13fa84"
             },
             "require": {
                 "hyperf/cache": "^3.1",
@@ -3757,11 +3757,11 @@
         },
         {
             "name": "lzpeng/gaara-hyperf-jwt",
-            "version": "dev-develop",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "/Users/peng/Works/gaara-hyperf-jwt",
-                "reference": "07628578985211f88f02c497d0733a7f086331f5"
+                "reference": "2dac2c3b1b93846b2c293e36ed372cbaffc87a3d"
             },
             "require": {
                 "lcobucci/clock": "^3.5",
@@ -6499,16 +6499,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.92.4",
+            "version": "v3.92.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "9e7488b19403423e02e8403cc1eb596baf4673b0"
+                "reference": "260cc8c4a1d2f6d2f22cd4f9c70aa72e55ebac58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/9e7488b19403423e02e8403cc1eb596baf4673b0",
-                "reference": "9e7488b19403423e02e8403cc1eb596baf4673b0",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/260cc8c4a1d2f6d2f22cd4f9c70aa72e55ebac58",
+                "reference": "260cc8c4a1d2f6d2f22cd4f9c70aa72e55ebac58",
                 "shasum": ""
             },
             "require": {
@@ -6591,7 +6591,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.92.4"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.92.5"
             },
             "funding": [
                 {
@@ -6599,7 +6599,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-01-04T00:38:52+00:00"
+            "time": "2026-01-08T21:57:37+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",

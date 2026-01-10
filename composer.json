@@ -30,7 +30,7 @@
         "hyperf/view": "^3.1",
         "hyperf/view-engine": "^3.1",
         "lzpeng/gaara-hyperf": "dev-master",
-        "lzpeng/gaara-hyperf-jwt": "dev-develop"
+        "lzpeng/gaara-hyperf-jwt": "dev-master"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",

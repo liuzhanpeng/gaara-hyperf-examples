@@ -33,13 +33,16 @@ return [
                     'target_path' => '/form-auth/index', // 登录成功跳转路径
                     'failure_path' => '/form-auth/login', // 登录失败跳转路径
                     'redirect_enabled' => true, // 是否启用登录成功后的重定向
-                    // 'redirect_param' => 'redirect_to', // 重定向目标路径参数名
-                    // 'username_param' => 'username', // 用户名参数名
-                    // 'password_param' => 'password', // 密码参数名
+                    // 'redirect_field' => 'redirect_to', // 重定向目标路径参数名
+                    // 'username_field' => 'username', // 用户名参数名
+                    // 'password_field' => 'password', // 密码参数名
                     // 'error_message' => '用户名或密码错误', // 登录失败错误消息; 支持字符串或回调函数; 回调函数参数为 AuthenticationException 实例
+                    'error_message' => function ($exception) {
+                        return $exception->getMessage();
+                    },
                     // 'csrf_enabled' => true, // 是否启用CSRF保护
                     // 'csrf_id' => 'authenticate', // CSRF令牌ID
-                    // 'csrf_param' => '_csrf_token', // CSRF令牌参数名
+                    // 'csrf_field' => '_csrf_token', // CSRF令牌参数名
                     // 'csrf_token_manager' => 'default', // CSRF令牌管理器服务名称
                 ],
             ],
@@ -53,7 +56,7 @@ return [
                 'type' => 'redirect', // form认证一般使用重定向处理未认证请求
                 'target_path' => '/form-auth/login',
                 // 'redirect_enabled' => true,
-                // 'redirect_param' => 'redirect_to',
+                // 'redirect_field' => 'redirect_to',
             ],
         ],
 
@@ -75,8 +78,8 @@ return [
             'authenticators' => [
                 'json_login' => [
                     'check_path' => '/json-auth/check_login', // JSON登录请求路径
-                    // 'username_param' => 'username', // 用户名字段名
-                    // 'password_param' => 'password', // 密码字段名
+                    // 'username_field' => 'username', // 用户名字段名
+                    // 'password_field' => 'password', // 密码字段名
                     'success_handler' => [ // 可选，登录成功处理器配置; 无状态认证时一般都需要配置, 用于生成access token返回给客户端
                         'class' => OpaqueTokenResponseHandler::class,
                         'params' => [
@@ -90,8 +93,8 @@ return [
                     // 'token_manager' => 'default', // 可选；不透明令牌管理器服务名称; 默认default
                     // 'token_extractor' => [
                     //     'type' => 'header', // 支持 header, cookie, custom; 默认header
-                    //     'param_name' => 'Authorization', // type == header时可选，默认Authorization; type == cookie时可选，默认access_token
-                    //     'param_type' => 'Bearer', // type == header时可选，默认Bearer
+                    //     'field' => 'Authorization', // type == header时可选，默认Authorization; type == cookie时可选，默认access_token
+                    //     'scheme' => 'Bearer', // type == header时可选，默认Bearer
                     // ],
                 ],
             ],
@@ -125,7 +128,7 @@ return [
 
             'authenticators' => [
                 'api_key' => [
-                    'api_key_param' => 'X-API-KEY',
+                    'api_key_field' => 'X-API-KEY',
                 ],
             ],
         ],
@@ -149,11 +152,11 @@ return [
 
             'authenticators' => [
                 'hmac' => [
-                    'api_key_param' => 'X-API-KEY', // 请求头中的api key参数名; 默认X-API-KEY; 
-                    //     'signature_param' => 'X-SIGNATURE', // 请求头中的签名参数名
-                    //     'timestamp_param' => 'X-TIMESTAMP', // 请求头中的时间戳参数名
+                    'api_key_field' => 'X-API-KEY', // 请求头中的api key参数名; 默认X-API-KEY; 
+                    //     'signature_field' => 'X-SIGNATURE', // 请求头中的签名参数名
+                    //     'timestamp_field' => 'X-TIMESTAMP', // 请求头中的时间戳参数名
                     //     'nonce_enabled' => true, // 是否启用随机字符串; 防止重放攻击
-                    //     'nonce_param' => 'X-NONCE', // nonce_enabled==true必须; 请求头中的随机字符串参数名 
+                    //     'nonce_field' => 'X-NONCE', // nonce_enabled==true必须; 请求头中的随机字符串参数名 
                     //     'nonce_cache_prefix' => 'default', // nonce_enabled==true必须; 缓存前缀
                     //     'ttl' => 60, // 请求签名的有效期，单位秒
                     //     'algo' => 'sha256', // 签名算法
@@ -220,25 +223,28 @@ return [
         //     'default' => [ // 不透明令牌管理器名称; 可按实际情况为每个Guard配置不同的管理器
         //         'type' => 'default', // 支持 default, custom; 默认default
         //         'prefix' => 'admin', // 存储前缀; 默认default; 多个管理器时必须配置不同的前缀
-        //         'expires_in' => 60 * 20, // token过期时间，单位秒; 必须小于等于 max_lifetime; 默认1200秒
-        //         'max_lifetime' => 60 * 60 * 24, // token最大生命周期，单位秒; 默认86400秒
+        //         'ttl' => 60 * 20, // token过期时间，单位秒; 必须小于等于 max_lifetime; 默认1200秒
+        //         'max_ttl' => 60 * 60 * 24, // token最大生命周期，单位秒; 默认86400秒
         //         'token_refresh' => true, // 是否启用token刷新机制; 默认true
         //         'ip_bind_enabled' => false, // 是否启用IP绑定; 默认false
         //         'user_agent_bind_enabled' => false, // 是否启用User-Agent绑定; 默认false
         //         'single_session' => true, // 是否启用单会话登录; 默认true
-        //         'access_token_length' => 16, // 生成令牌长度; 默认16
+        //         'access_token_length' => 64, // 生成令牌长度; 默认64
         //     ]
         // ],
         'jwt_access_token_managers' => [
             'default' => [
                 'algo' => 'HS256', // 签名算法
-                'secret_key' => 'SU9idWFtKGRzZnZhZGtsbFlranYxM0t2ZzY3OHYxU3Yx', // 请修改为自己的密钥(需进行Base64编码)
-                'expires_in' => 60, // token过期时间，单位秒
+                'secret_key' => 'IUv7v8askqff3jH8LKD38Uvaj1fTku32',
+                // 'algo' => 'ES256',
+                // 'secret_key' => file_get_contents(BASE_PATH . '/config/autoload/es256-private-key.pem'),
+                // 'public_key' => file_get_contents(BASE_PATH . '/config/autoload/es256-public-key.pem'),
+                'ttl' => 60, // token过期时间，单位秒
             ],
         ],
         'jwt_refresh_token_managers' => [
             'default' => [
-                'expires_in' => 60 * 5,
+                'ttl' => 60 * 5,
                 // 'single_session' => false,
             ]
         ]
