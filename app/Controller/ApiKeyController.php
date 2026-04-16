@@ -9,10 +9,10 @@ use Hyperf\HttpServer\Annotation\GetMapping;
 
 use function GaaraHyperf\auth;
 
-#[Controller(prefix: "/api-key-auth")]
-class ApiKeyAuthController extends AbstractController
+#[Controller(prefix: '/api-key')]
+class ApiKeyController extends AbstractController
 {
-    #[GetMapping(path: "userinfo")]
+    #[GetMapping(path: 'userinfo')]
     public function userinfo()
     {
         $user = auth()->getUser();

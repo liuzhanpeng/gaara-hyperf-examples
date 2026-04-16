@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 
 namespace App\Controller;
 
@@ -14,8 +22,8 @@ use Hyperf\HttpServer\Annotation\PostMapping;
 use function GaaraHyperf\auth;
 use function Hyperf\ViewEngine\view;
 
-#[Controller(prefix: "/form-auth")]
-class FormAuthController extends AbstractController
+#[Controller(prefix: '/form-login')]
+class FormLoginController extends AbstractController
 {
     #[Inject()]
     private SessionInterface $session;
@@ -23,32 +31,38 @@ class FormAuthController extends AbstractController
     #[Inject()]
     private CsrfTokenManagerResolverInterface $csrfTokenManagerResolver;
 
-    #[GetMapping(path: "index")]
+    #[GetMapping(path: 'index')]
     public function index()
     {
         $user = auth()->getUser();
-        return view('form-auth/index', [
-            'username' => $user->getIdentifier()
+        return view('form-login/index', [
+            'username' => $user->getIdentifier(),
         ]);
     }
 
-    #[GetMapping(path: "login")]
+    #[GetMapping(path: 'other')]
+    public function other()
+    {
+        return view('form-login/other');
+    }
+
+    #[GetMapping(path: 'login')]
     public function login()
     {
         $authenticationError = $this->session->get('authentication_error', null);
         $redirectTo = $this->request->query('redirect_to', null);
         $csrfToken = $this->csrfTokenManagerResolver->resolve()->generate();
 
-        return view('form-auth/login', [
+        return view('form-login/login', [
             'authentication_error' => $authenticationError,
             'redirect_to' => $redirectTo,
             'csrf_token' => $csrfToken,
         ]);
     }
 
-    #[PostMapping(path: "logout")]
+    #[PostMapping(path: 'logout')]
     public function logout()
     {
-        return $this->response->redirect('/form-auth/login');
+        return $this->response->redirect('/form-login/login');
     }
 }

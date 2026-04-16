@@ -46,7 +46,7 @@ class TokenManager {
      * 重定向到登录页面
      * @param {string} loginUrl 
      */
-    static redirectToLogin(loginUrl = '/json-auth/login.html') {
+    static redirectToLogin(loginUrl = '/json-login/login.html') {
         this.clearToken();
         window.location.href = loginUrl;
     }
@@ -56,7 +56,7 @@ class TokenManager {
      * @param {string} loginUrl 
      * @returns {boolean}
      */
-    static requireAuth(loginUrl = '/json-auth/login.html') {
+    static requireAuth(loginUrl = '/json-login/login.html') {
         if (!this.isTokenValid()) {
             this.redirectToLogin(loginUrl);
             return false;
@@ -97,7 +97,8 @@ class ApiClient {
             const response = await fetch(url, config);
             
             // 如果是401未授权，清除token并重定向到登录页
-            if (response.status === 401) {
+            if (response.status === 401 && url !== '/json-login/check-login') {
+                console.log(url);
                 TokenManager.redirectToLogin();
                 return;
             }

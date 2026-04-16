@@ -9,10 +9,10 @@ use Hyperf\HttpServer\Annotation\GetMapping;
 
 use function GaaraHyperf\auth;
 
-#[Controller(prefix: "/hmac-auth")]
-class HmacAuthController extends AbstractController
+#[Controller(prefix: '/hmac')]
+class HmacController extends AbstractController
 {
-    #[GetMapping(path: "userinfo")]
+    #[GetMapping(path: 'userinfo')]
     public function userinfo()
     {
         $user = auth()->getUser();
@@ -21,12 +21,12 @@ class HmacAuthController extends AbstractController
         ]);
     }
 
-    #[GetMapping(path: "generateSignature")]
+    #[GetMapping(path: 'generateSignature')]
     public function generateSignature()
     {
-        // 结构: METHOD \n PATH \n QUERY \n APIKEY \n TIMESTAMP [\n NONCE] \n BODY_HASH
+        // 签名内容: METHOD\nPATH\nQUERY\nAPIKEY\nTIMESTAMP[\nNONCE]\nBODY_HASH
         $method = 'GET';
-        $path = '/hmac-auth/userinfo';
+        $path = '/hmac/userinfo';
         $query = '';
         $apiKey = 'hmac-user-1';
         $timestamp = time();
@@ -42,9 +42,6 @@ class HmacAuthController extends AbstractController
             $bodyHash,
         ]);
 
-        // echo 'generate:';
-        // print_r($dataToSign);
-
         $secret = 'KLvoaD3f9qZ3TY8w'; // 与用户关联的密钥
         $signature = hash_hmac('sha256', $dataToSign, $secret);
 
@@ -54,13 +51,5 @@ class HmacAuthController extends AbstractController
             'nonce' => $nonce,
             'signature' => $signature,
         ]);
-
-        // GET
-        // /hmac-signature-auth/userinfo
-
-        // hmac-user-1
-        // 1767599296
-        // 498aba5162f6
-        // e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     }
 }

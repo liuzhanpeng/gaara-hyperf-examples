@@ -10,33 +10,25 @@ use Hyperf\HttpServer\Annotation\PostMapping;
 
 use function GaaraHyperf\auth;
 
-#[Controller(prefix: "/json-auth")]
-class JsonAuthController extends AbstractController
+#[Controller(prefix: '/jwt')]
+class JwtController extends AbstractController
 {
-    #[GetMapping(path: "index")]
+    #[GetMapping(path: 'index')]
     public function index()
     {
         $user = auth()->getUser();
+
         return $this->response->json([
-            'message' => 'JSON Auth Example',
+            'message' => 'JWT Example',
             'username' => $user->getIdentifier(),
         ]);
     }
 
-    #[GetMapping(path: "userinfo")]
-    public function userinfo()
-    {
-        $user = auth()->getUser();
-        return $this->response->json([
-            'username' => $user->getIdentifier(),
-        ]);
-    }
-
-    #[PostMapping(path: "logout")]
+    #[PostMapping(path: 'logout')]
     public function logout()
     {
         return $this->response->json([
-            'message' => 'Logged out successfully',
+            'message' => 'Logged out',
         ]);
     }
 }

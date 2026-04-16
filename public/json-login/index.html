@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Json Auth</title>
+    <title>Json Login</title>
 </head>
 
 <body>
-    <h1>Json Auth Example</h1>
+    <h1>Json Login Example</h1>
     <div>
         username: <span id="username"></span>
     </div>
@@ -18,7 +18,7 @@
 
     <script src="auth-utils.js"></script>
     <script>
-        const response =  ApiClient.get('/json-auth/userinfo');
+        const response =  ApiClient.get('/json-login/userinfo');
         response.then(response => {
             if (response.status !== 200) {
                 console.error('Failed to fetch user data:', response);
@@ -43,7 +43,7 @@
         async function logout() {
             if (confirm('Are you sure you want to logout?')) {
                 try {
-                    const response = await ApiClient.post('/json-auth/logout');
+                    const response = await ApiClient.post('/json-login/logout');
                     const data = await response.json();
                     
                     alert(data.message || 'Logged out successfully');

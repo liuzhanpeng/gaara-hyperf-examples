@@ -9,16 +9,21 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
-$header = <<<'EOF'
-This file is part of Hyperf.
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
 
-@link     https://www.hyperf.io
-@document https://hyperf.wiki
-@contact  group@hyperf.io
-@license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+/**
+ * This file is part of Hyperf.
+ *
+ * @see     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
+$header = <<<'EOF'
 EOF;
 
-return (new PhpCsFixer\Config())
+return (new Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@PSR2' => true,
@@ -97,7 +102,7 @@ return (new PhpCsFixer\Config())
         'single_line_empty_body' => false,
     ])
     ->setFinder(
-        PhpCsFixer\Finder::create()
+        Finder::create()
             ->exclude('public')
             ->exclude('runtime')
             ->exclude('vendor')
