@@ -79,15 +79,5 @@
             "Composer\\Config::disableProcessTimeout",
             "php ./bin/hyperf.php start"
         ]
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "/Users/peng/Works/gaara-hyperf"
-        },
-        {
-            "type": "path",
-            "url": "/Users/peng/Works/gaara-hyperf-jwt"
-        }
-    ]
+    }
 }
